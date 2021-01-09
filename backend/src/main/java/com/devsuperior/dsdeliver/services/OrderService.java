@@ -35,4 +35,12 @@ public class OrderService {
 		dto.getProducts().forEach(p -> order.getProducts().add(productRepository.getOne(p.getId())));
 		return new OrderDTO(repository.save(order));
 	}
+	
+	@Transactional
+	public OrderDTO setDelivered(Long id) {
+		Order order = repository.getOne(id);
+		order.setStatus(OrderStatus.DELIVERED);
+		order = repository.save(order);
+		return new OrderDTO(repository.save(order));
+	}
 }
